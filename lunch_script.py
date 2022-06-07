@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-char_name = input("Which character do to want to know about? (Starlord, Mystique, Hulk: ")
-
+char_name = input("Which character do to want to know about? (Starlord, Mystique, Hulk: ").lower().title()
 char_stat = input("What statistic do you want to know about? real name, powers, archenemy: ")
 
 marvelchars= {
@@ -21,5 +20,5 @@ marvelchars= {
   "archenemy": "adrenaline"}
              }
 
-print(char_name + "'s", char_stat, "is :", (marvelchars[char_name][char_stat]))
+print(char_name + "'s", char_stat, "is :", (marvelchars[char_name][char_stat].title()))
 
