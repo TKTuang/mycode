@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+#first list
+wordbank= ["four", "spaces"]
+
+#student list
+tlgstudents= ["Aaron", "Casey", "Donny", "Emmanuel", "Eric", "Jaelen", "James", "Jay", "John", "Ken", "Maurice", "Mike", "Ryan", "Shamain", "Tuang", "Tyler", "Zhenqian", "Travis"]
+
+num = input("Type any number between 0 -17: ")
+
+#print output
+print("Student #" + int(num), "is", tlgstudents[num])
+
+
+
