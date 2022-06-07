@@ -11,6 +11,7 @@ def main():
     # PART 2
     # Ask the user to pick a number between 1 and 100.
     # Convert the input into an integer.
+    print(f"My favorite character is {heroes[2]}!")
     num=int(input("Pick anumber between 1 -100:"))
 
 
