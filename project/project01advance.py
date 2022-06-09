@@ -33,13 +33,18 @@ if mystring in "Rock Paper Scissor":
 
 
 matches = []
+count = 0
  
 for match in player_power:
     if "Gun" in match:
         matches.append(match)
-        print(matches)
+        count += 1
+        print(match)
 
-
+if count > 1:
+    print("Two players chose Gun, they are both out!")
+elif count == 1:
+    print("Player that chose gun won!")
 
 
 """if any("Gun" in word for word in player_power):
