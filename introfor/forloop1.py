@@ -18,10 +18,22 @@ farms = [{"name": "NE Farm", "agriculture": ["sheep", "cows", "pigs", "chickens"
          {"name": "W Farm", "agriculture": ["pigs", "chickens", "llamas"]},
          {"name": "SE Farm", "agriculture": ["chickens", "carrots", "celery"]}]
 
+user = input("Pick a zone (NE/W/SE): ")
+yuck= ["carrots", "celery"]
+def main():
+    NE_animals= farms[0]["agriculture"]
+    for animals in NE_animals:
+        if user == "NE":                                                            
+            print(animals, end="\n")
 
-for x in farms:
-    print(farms.get("name", "Unknown Farm"), end=":\n")
-    for agri in farms.get("agriculture"):
-        print("  -", agri)
-if __name__ == "__main__":
-    main()
+    W_animals= farms[1]["agriculture"]
+    for animals in W_animals: 
+        if user == "W":                                                             
+            print(animals, end="\n")
+
+    SE_animals= farms[2]["agriculture"]                                                 
+    for animals in SE_animals:  
+        if user == "SE" and animals not in yuck:
+            print(animals, end="\n")
+main()    
+
