@@ -2,8 +2,33 @@
 
 # Replace RPG starter project with this code when new instructions are live
 
+
 import random
 from pprint import pprint
+
+playerHealth = 25
+monsterHealth = 20
+elitemonsterHealth = 30 
+
+def dice():
+    min = 1
+    max = 6
+    
+    roll = random.randint(min, max)
+    
+    roll_again = "yes" 
+
+    while roll_again == "yes" or roll_again == "y":
+        while playerHealth >= 0 or monsterHealth >= 0:
+            print("Rolling the dices...")
+            print("The values are: ")
+            print(playerHealth - roll)
+            playerHealth -= roll
+            print(monsterHealth - roll)
+            monsterHealth -= roll
+
+        roll_again = input("Roll the dices again?")
+dice()
 
 def showInstructions():
   #print a main menu and the commands
@@ -11,7 +36,7 @@ def showInstructions():
 RPG Game
 --------
 Objective: Find the lost Guardian.
-Save him with your your potion and a key.
+Save him with your potion and a key.
 ========
 Commands:
   go [direction]
@@ -36,7 +61,7 @@ inventory = []
 
 
 #list of NPCs
-npc = random.choice(["guardian", "cat", "dog", "monster", "elite monster"])
+npcs = random.choice(["guardian", "cat", "dog", "monster", "elite monster"])
 
 #a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
@@ -51,13 +76,13 @@ rooms = {
                   'west' : 'Weapon Room',
                   'east' : 'Library',
                   'south' : 'Entrance',
-                  'npc' : 'dog',
-                  'item' : ''
+                  'item' : '',
+                  'npc'  : 'guardian'
                 },
             'Hall of Secrets' : {
                   'south' : 'Main Room',
                   'item' : '',
-                  'npc' : npc
+                  'npc' : npcs
                },
             'Weapon Room' : {
                   'west' : 'Basement',
@@ -66,24 +91,25 @@ rooms = {
                   'item' : ''
                },
             'Library' : {
-                  'north' : 'Second floor',
+                  'north' : 'Second Floor',
                   'east' : 'Magic Room',
-                  'npc' : npc,
+                  'west' : 'Main Room',
+                  'npc' : npcs,
                   'item' : ''
                },
             'Magic Room' : {
                  'west' : 'Library',
-                 'npc' : npc,
+                 'npc' : npcs,
                  'item' : ''
               },
             'Second Floor' : {
                 'south' : 'Library',
-                'npc' : npc,
+                'npc' : npcs,
                 'item' : ''
               },
             'Basement' : {
                 'east' : 'Weapon Room',
-                'npc' : npc,
+                'npc' : npcs,
                 'item' : ''
             }
          }
