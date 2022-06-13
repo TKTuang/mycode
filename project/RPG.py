@@ -6,7 +6,7 @@
 import random
 from pprint import pprint
 
-#Function to call when encountering a monster to fight
+"""#Function to call when encountering a monster to fight
 def battle():
 
     playerHealth = 25
@@ -14,52 +14,58 @@ def battle():
     elitemonsterHealth = 30
 
     #skill/attack list
-    attacks = [{"healing" : 3}, {"block" : 0}, {"hit" : 3}, {"critDamage" : 5}]
-
+    attacks = ["healing" , "hit", "critDamage"]
+    print('''
+========================                                                                                            
+Entering Battle: Ready!
+------------------------''')
 
     #loops until either player OR monster Health <= 0
-    while playerHealth >= 0 or monsterHealth >= 0:
-        print('''
-=================
-Entering Battle:
------------------ ''')
+    while True:
+
         print(f"You health is: {playerHealth}")
         print(f"The monster health is: {monsterHealth}")
-        pickSkill = input("Choose an attack (1, 2, 3, or 4): ")
-        userSkill = ""
+        pickSkill = input("Choose a skill (1/2/3/4): ")
+        enemySkill = random.choice(attacks)
+        print('''
+-------------------------------------''')
+       #Intense battle commencing atm
         if pickSkill == "1":
-            userSkill == attacks[0]
-            playerHealth -= attacks[0]["healing"]
-            print(playerHealth)
+            if "potion" in inventory:
+                playerHealth += 3
+                print("You heal for 3 Health Points")
+            else:
+                print("You do not have any potion")
         elif pickSkill == "2":
-            userSkill == attacks[1]
-            playerHealth -= attacks[1]["block"] 
-            print(playerHealth)
+            monsterHealth -= 3
+            print("You deal -3 damages to the monster!")
         elif pickSkill == "3":
-            monsterHealth -= attacks[2]["hit"] 
-            print(monsterHealth)
-        elif pickSkill == "4":
-            monsterHealth -= attacks[3]["critDamage"] 
-            print(monsterHealth)
+            if "crit buff" in inventory:
+                monsterHealth -= 5
+                print("Hits the moster with critical damage of -5!")
+            else:
+                monsterHealth -= 3
+                print("You deal -3 damage")
         else:
-            print("You donot have that skill.")
-        enemySkill = random.choice(attacks) 
-        print(enemySkill)
+            print("You do not have that skill.")
+ 
 
         if enemySkill == attacks[0]:
-            monsterHealth -= attacks[0]["healing"]
-            print(monsterHealth)
+            monsterHealth += 3
+            print("Monster heals for +3 Health Points")       
         elif enemySkill == attacks[1]:
-            monsterHealth -= attacks[1]["block"]
-            print(monsterHealth)         
+            playerHealth -= 3
+            print("You took -3 damage")
         elif enemySkill == attacks[2]:
-            playerHealth -= attacks[2]["hit"]
-            print(playerHealth)
-        elif enemySkill == attack[3]:
-            playerHealth -= attacks[3]["critDamage"]
-            print(playerHealth)
+            playerHealth -= 5
+            print("You took -5 crit damage!")
+        
+        if playerHealth <= 0:
+            break
+        elif monsterHealth <= 0:
+            break
 
-battle()
+battle()"""
 
 def showInstructions():
   #print a main menu and the commands
@@ -67,7 +73,7 @@ def showInstructions():
 RPG Game
 --------
 Objective: Find the lost Guardian.
-Save him with your potion and a key.
+Save him with a key in your possesion.
 ========
 Commands:
   go [direction]
@@ -88,7 +94,7 @@ def showStatus():
   print("---------------------------")
 
 #an inventory, which is initially empty
-inventory = []
+inventory = ["guardian blade"]
 
 
 #list of NPCs
@@ -152,7 +158,7 @@ currentRoom = 'Entrance'
 roomlist= list(rooms.keys())
 
 # items to distribute
-items= ["guardian blade","cake","key","potion", "apple", "carrot", "strength buff", "socks"]
+items= ["potion","crit buff","","potion", "potion", "key", "crit buff", "crit buff"]
 
 # randomize the order
 random.shuffle(roomlist)
@@ -162,11 +168,80 @@ for x in range(8): # there are 4 rooms, so this must be 4
     roomselect= roomlist[x]
     itemselect= items[x]
     rooms[roomselect]["item"] = itemselect
-    print(rooms[roomselect]["item"])
+    #print(rooms[roomselect]["item"])
                                              
 
 
 showInstructions()
+
+#Function to call when encountering a monster to fight
+def battle():
+
+    playerHealth = 25
+    monsterHealth = 20
+    elitemonsterHealth = 30
+
+    #skill/attack list
+    attacks = ["healing" , "hit", "critDamage"]
+    print('''
+========================
+Entering Battle: Ready!
+------------------------''')
+
+    #loops until either player OR monster Health <= 0
+    while True:
+
+        print(f"You health is: {playerHealth}")
+        print(f"The monster health is: {monsterHealth}")
+        showStatus()
+        pickSkill = input("Choose a skill (1/2/3/4): ")
+        enemySkill = random.choice(attacks)
+        print('''
+-------------------------------------''')
+       #Intense battle commencing atm
+        if pickSkill == "1":
+            if "potion" in inventory:
+                playerHealth += 3
+                print("You heal for 3 Health Points")
+                inventory.remove("potion")
+            else:
+                print("You do not have any potion")
+        elif pickSkill == "2":
+            monsterHealth -= 3
+            print("You deal -3 damages to the monster!")
+        elif pickSkill == "3":
+            if "crit buff" in inventory:
+                monsterHealth -= 5
+                print("Hits the moster with critical damage of -5!")
+                inventory.remove("crit buff")
+            else:
+                monsterHealth -= 3
+                print("You deal -3 damage")
+        else:
+            print("You do not have that skill.")
+
+
+        if enemySkill == attacks[0]:
+            monsterHealth += 3
+            print("Monster heals for +3 Health Points")
+        elif enemySkill == attacks[1]:
+            playerHealth -= 3
+            print("You took -3 damage")
+        elif enemySkill == attacks[2]:
+            playerHealth -= 5
+            print("You took -5 crit damage!")
+
+
+
+        if playerHealth <= 0:
+            print("You lost to the monster...GAME OVER")
+            currentRoom = "Entrance"
+            break
+        elif monsterHealth <= 0:
+            print("Congratulations. Monster defeated.")
+            del rooms[currentRoom]['npc']
+            break
+
 
 #loop forever
 while True:
@@ -213,19 +288,15 @@ while True:
 
 
   ## If a player enters a room with a monster with a weapon  
-    if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc'] and 'guardian blade' in inventory and 'potion' in inventory:
+    if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc']:
         showStatus()
-        print("You killed the monster with your Guardian Blade!!!")
-        del rooms[currentRoom]['npc']
-        break
-    elif  'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc'] and 'strength buff' in inventory and 'guardian blade' in inventory:
+        battle()
+    elif  'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc']:
         showStatus()
-        print("You killed the monster with your strength buff and Guardian Blade!!!")
-        del rooms[currentRoon]['npc']
-        break
+        battle()
 
   ## Define how a player can win
-    if 'npc' in rooms[currentRoom] and 'guardian' in rooms[currentRoom]['npc'] and 'key' in inventory and 'potion' in inventory:
+    if 'npc' in rooms[currentRoom] and 'guardian' in rooms[currentRoom]['npc'] and 'key' in inventory:
         print('You found the lost guardian.. YOU WIN!')
         break
 
@@ -235,7 +306,7 @@ while True:
         showStatus()
         print('You encountered a monster and you dont have anything to defend yourself with..GAME OVER!')
         break
-    elif 'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc'] and 'guardian blade' not in inventory and 'strength buff' not in inventory:
+    elif 'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc'] and 'guardian blade' not in inventory:
         showStatus()
         print("You were murdered by the elite monster")
         break
