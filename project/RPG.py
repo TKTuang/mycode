@@ -26,7 +26,7 @@ def showStatus():
   print('Inventory : ' + str(inventory))
   #print an item if there is one
   if "item" in rooms[currentRoom]:
-    print('You see found a '  + rooms[currentRoom]['item'])
+    print('You found a '  + rooms[currentRoom]['item'])
   if "npc" in rooms[currentRoom]:
       print('You see a ' + rooms[currentRoom]['npc'])
   print("---------------------------")
@@ -156,20 +156,29 @@ while True:
 
 
   ## If a player enters a room with a monster with a weapon  
-    if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc'] and 'guardian blade' in inventory:
+    if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc'] and 'guardian blade' in inventory and 'potion' in inventory:
+        showStatus()
         print("You killed the monster with your Guardian Blade!!!")
         del rooms[currentRoom]['npc']
+        break
     elif  'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc'] and 'strength buff' in inventory and 'guardian blade' in inventory:
+        showStatus()
         print("You killed the monster with your strength buff and Guardian Blade!!!")
         del rooms[currentRoon]['npc']
+        break
 
   ## Define how a player can win
     if 'npc' in rooms[currentRoom] and 'guardian' in rooms[currentRoom]['npc'] and 'key' in inventory and 'potion' in inventory:
         print('You found the lost guardian.. YOU WIN!')
+        break
 
 #If a player enters a room with a monster with no weapon
     
     if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc'] and  'guardian blade' not in inventory:
+        showStatus()
         print('You encountered a monster and you dont have anything to defend yourself with..GAME OVER!')
+        break
     elif 'npc' in rooms[currentRoom] and 'elite monster' in rooms[currentRoom]['npc'] and 'guardian blade' not in inventory and 'strength buff' not in inventory:
+        showStatus()
         print("You were murdered by the elite monster")
+        break
