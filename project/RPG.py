@@ -6,29 +6,60 @@
 import random
 from pprint import pprint
 
-playerHealth = 25
-monsterHealth = 20
-elitemonsterHealth = 30 
+#Function to call when encountering a monster to fight
+def battle():
 
-def dice():
-    min = 1
-    max = 6
-    
-    roll = random.randint(min, max)
-    
-    roll_again = "yes" 
+    playerHealth = 25
+    monsterHealth = 20
+    elitemonsterHealth = 30
 
-    while roll_again == "yes" or roll_again == "y":
-        while playerHealth >= 0 or monsterHealth >= 0:
-            print("Rolling the dices...")
-            print("The values are: ")
-            print(playerHealth - roll)
-            playerHealth -= roll
-            print(monsterHealth - roll)
-            monsterHealth -= roll
+    #skill/attack list
+    attacks = [{"healing" : 3}, {"block" : 0}, {"hit" : 3}, {"critDamage" : 5}]
 
-        roll_again = input("Roll the dices again?")
-dice()
+
+    #loops until either player OR monster Health <= 0
+    while playerHealth >= 0 or monsterHealth >= 0:
+        print('''
+=================
+Entering Battle:
+----------------- ''')
+        print(f"You health is: {playerHealth}")
+        print(f"The monster health is: {monsterHealth}")
+        pickSkill = input("Choose an attack (1, 2, 3, or 4): ")
+        userSkill = ""
+        if pickSkill == "1":
+            userSkill == attacks[0]
+            playerHealth -= attacks[0]["healing"]
+            print(playerHealth)
+        elif pickSkill == "2":
+            userSkill == attacks[1]
+            playerHealth -= attacks[1]["block"] 
+            print(playerHealth)
+        elif pickSkill == "3":
+            monsterHealth -= attacks[2]["hit"] 
+            print(monsterHealth)
+        elif pickSkill == "4":
+            monsterHealth -= attacks[3]["critDamage"] 
+            print(monsterHealth)
+        else:
+            print("You donot have that skill.")
+        enemySkill = random.choice(attacks) 
+        print(enemySkill)
+
+        if enemySkill == attacks[0]:
+            monsterHealth -= attacks[0]["healing"]
+            print(monsterHealth)
+        elif enemySkill == attacks[1]:
+            monsterHealth -= attacks[1]["block"]
+            print(monsterHealth)         
+        elif enemySkill == attacks[2]:
+            playerHealth -= attacks[2]["hit"]
+            print(playerHealth)
+        elif enemySkill == attack[3]:
+            playerHealth -= attacks[3]["critDamage"]
+            print(playerHealth)
+
+battle()
 
 def showInstructions():
   #print a main menu and the commands
