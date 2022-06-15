@@ -31,3 +31,19 @@ class Cheat_Loaded_Dice(Player): # inheritance of Player
               self.dice[i] += 1
           i += 1
 
+class Cheat_Mulligan(Player):
+    def cheat(self):
+       while sum(self.dice) <= 9:
+           self.dice = []
+           for i in range(3):
+              self.dice.append(randint(1,6))
+
+# pool scores and keep highest set of three
+#class Cheat_Picker(Player):  # inheritance of Player
+#    def cheat(self):
+#        rollpool = []
+
+ #       if self.dice[0] > self.dice[1]:
+#
+ #      if self.dice[2] > self.dice[3]:
+#      if self.dice[4] > self.dice[5]:"
