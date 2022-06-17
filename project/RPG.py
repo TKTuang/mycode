@@ -103,14 +103,14 @@ npcs = [ "", "cat", "guardian", "monster",  "dog", "monster", "monster", ""]
 # randomize the order
 random.shuffle(roomlist)
 
-for x in range(8): # there are 4 rooms, so this must be 4
+for x in range(8): # there are 8 rooms, so this must be 8
 
-    roomselect= roomlist[x]
+    roomselect= roomlist[x] 
     itemselect= items[x]
     rooms[roomselect]["item"] = itemselect
     #print(rooms[roomselect]["item"])
                                              
-for y in range(8): # there are 4 rooms, so this must be 4
+for y in range(8): # there are 8 rooms, so this must be 8
 
     roomselect= roomlist[y]
     npcselect= npcs[y]
@@ -166,18 +166,20 @@ while True:
 
     #if they type "pat" first
     if move[0] == 'pat':
+        # cat or dog are oaky to pat
         if "npc" in rooms[currentRoom] and "dog" in rooms[currentRoom]["npc"]:
             print(crayons.green("Good boy", bold=True))
         elif "npc" in rooms[currentRoom] and "cat" in rooms[currentRoom]["npc"]:
             print(crayons.green("Mewow", bold=True))
         else:
+            #anything else, send a warning to not pat
             print(crayons.magenta("You shouldn't have done that..."))
 
 
-  ## If a player enters a room with a monster with a weapon  
+  ## If a player enters a room with a monster, begin batle scenario
     if 'npc' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['npc']:
-        #Function to call when encountering a monster to fight
-
+        
+        #start off at the sme health points
         playerHealth = 20
         monsterHealth = 20
 
@@ -190,21 +192,27 @@ Entering Battle: Ready!
 
         #loops until either player OR monster Health <= 0
         while True:
-
+            
+            #usefull stat during the fight
             print(f"Your health is: {playerHealth}")
             print(f"The monster health is: {monsterHealth}")
             print(f"Inventory: {inventory}")
+
+            #user choose an attack per turn
             pickSkill = input(crayons.yellow("""Skill: 
 1: to heal with potion
 2: to attack the monster
 3: to attack monster with crit buff: 
 Choose a skill (1/2/3): """))
             print("""----------------------------------""")
+
+            #enemy attack in randomly selected
             enemySkill = random.choice(attacks)
             print('''
 -------------------------------------''')
            #Intense battle commencing atm
             if pickSkill == "1":
+                #player healing if they have potion
                 if "potion" in inventory:
                     playerHealth += 3
                     print("You heal for " +crayons.green('3 Health Points'))
@@ -212,19 +220,23 @@ Choose a skill (1/2/3): """))
                 else:
                     print(crayons.magenta("You do not have any potion"))
             elif pickSkill == "2":
+                #palyer attack 2
                 monsterHealth -= 3
                 print("You deal " + crayons.red('3 damages to the monster!'))
             elif pickSkill == "3":
+                #player attack 3 success if crit buff in inventory
                 if "crit buff" in inventory:
                     monsterHealth -= 5
                     print("Hits the moster with " + crayons.red('critical damage of 5!'))
                     inventory.remove("crit buff")
                 else:
+                    #if not it just deals regular 3 damage
                     monsterHealth -= 3
                     print("You deal " + crayons.red('3 damage'))
             else:
                 print(crayons.magenta("You do not have that skill."))
-
+            
+            #enemy's randomize attacks
             if enemySkill == attacks[0]:
                 monsterHealth += 3
                 print("Monster heals for " + crayons.green('3 Health Points'))
@@ -234,18 +246,22 @@ Choose a skill (1/2/3): """))
             elif enemySkill == attacks[2]:
                 playerHealth -= 3
                 print("You took " + crayons.red('3 crit damage!'))
-
+            
+            #player losing outcome
             if playerHealth <= 0:
                 print(crayons.magenta("You got DEFEATED...respawn at the Entrance", bold=True))
+                #restart from entrance
                 currentRoom = "Entrance"
                 break
 
+            #player winnning outcome
             elif monsterHealth <= 0:
                 print(crayons.cyan("Congratulations. Monster defeated.", bold=True))
+                #get rid of the monster since it got defeated
                 del rooms[currentRoom]['npc']
                 break
 
-  ## Define how a player can win
+  ## Define how a player can win the whole game
     if 'npc' in rooms[currentRoom] and 'guardian' in rooms[currentRoom]['npc'] and 'key' in inventory:
         print(crayons.green('You found the lost guardian.. YOU WIN!', bold=True))
         break
