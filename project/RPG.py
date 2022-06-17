@@ -213,7 +213,7 @@ Choose a skill (1/2/3): """))
                     print(crayons.magenta("You do not have any potion"))
             elif pickSkill == "2":
                 monsterHealth -= 3
-                print("You deal " + crayons.red('-3 damages to the monster!'))
+                print("You deal " + crayons.red('3 damages to the monster!'))
             elif pickSkill == "3":
                 if "crit buff" in inventory:
                     monsterHealth -= 5
